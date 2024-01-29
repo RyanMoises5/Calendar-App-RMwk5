@@ -1,8 +1,24 @@
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
+
 var currentDay = $('#currentDay');
 currentDay.text(dayjs().format('dddd, MMMM D'));
+var currentHour = dayjs().hour();
+
+var timeBlocks = [$('#hour-9'),$('#hour-10'),$('#hour-11'),$('#hour-12'),$('#hour-13'),$('#hour-14'),$('#hour-15'),$('#hour-16'),$('#hour-17')]
+
+for (let index = 0; index < timeBlocks.length; index++) {
+  var hourCount = parseInt(timeBlocks[index].attr("id").split("hour-")[1]);
+
+  if (currentHour > hourCount) {
+    timeBlocks[index].addClass("past");
+  } else if (currentHour === hourCount) {
+    timeBlocks[index].addClass("present");
+  } else if (currentHour < hourCount) {
+    timeBlocks[index].addClass("future");
+  }
+}
 
 $(function () {
   // TODO: Add a listener for click events on the save button. This code should
